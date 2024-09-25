@@ -192,7 +192,7 @@ class BambuDataUpdateCoordinator(DataUpdateCoordinator):
             }
             #LOGGER.debug(f"EVENT: print_error cleared: {event_data}")
             if 'Code' in device.print_error.errors:
-                event_data["Code"] = device.print_error.errors['Code']
+                event_data["Code"] = device.print_error.error['Code']
         else:
             event_data = {
                 "device_id": hadevice.id,

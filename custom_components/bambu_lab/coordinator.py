@@ -47,7 +47,7 @@ class BambuDataUpdateCoordinator(DataUpdateCoordinator):
                                   access_code = entry.options['access_code'],
                                   usage_hours = self.latest_usage_hours,
                                   manual_refresh_mode = entry.options.get('manual_refresh_mode', False))
-            
+
         self._updatedDevice = False
         self.data = self.get_model()
         self._eventloop = asyncio.get_running_loop()
@@ -146,7 +146,7 @@ class BambuDataUpdateCoordinator(DataUpdateCoordinator):
         LOGGER.debug(f"{self.config_entry.data['device_type']} HA POLL: MQTT connected: {self.client.connected}")
         device = self.get_model()
         return device
-    
+
     def _update_data(self):
         device = self.get_model()
         try:
@@ -191,7 +191,7 @@ class BambuDataUpdateCoordinator(DataUpdateCoordinator):
                 "type": "event_printer_error_cleared",
             }
             #LOGGER.debug(f"EVENT: print_error cleared: {event_data}")
-            if 'Code' in device.print_error.errors:
+            if 'Code' in device.print_error.error:
                 event_data["Code"] = device.print_error.error['Code']
         else:
             event_data = {
@@ -267,7 +267,7 @@ class BambuDataUpdateCoordinator(DataUpdateCoordinator):
         }
         LOGGER.debug(f"BUS EVENT: {event}: {event_data}")
         self._hass.bus.async_fire(f"{DOMAIN}_event", event_data)
-        
+
 
     def get_model(self):
         return self.client.get_device()
